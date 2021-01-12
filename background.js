@@ -1,7 +1,7 @@
 
-/* Parse bitcoin URL query keys. */
+/* Parse groestlcoin URL query keys. */
 function parseBitcoinURL(url) {
-	var r = /^bitcoin:([a-zA-Z0-9]{27,34})(?:\?(.*))?$/;
+	var r = /^groestlcoin:([a-zA-Z0-9]{27,34})(?:\?(.*))?$/;
 	var match = r.exec(url);
 	if (!match) return null;
 
@@ -23,13 +23,13 @@ function parseBitcoinURL(url) {
 
 /* Open address info page in new tab. */
 function openAddressInfo(address) {
-    chrome.tabs.create({ url: 'https://www.blockchain.com/btc/address/'+encodeURIComponent(address) });
+    chrome.tabs.create({ url: 'https://chainz.cryptoid.info/grs/address.dws?'+encodeURIComponent(address) });
 }
 
-var lookupItemId = chrome.contextMenus.create({title: 'Lookup Bitcoin address',
+var lookupItemId = chrome.contextMenus.create({title: 'Lookup Groestlcoin address',
 					       contexts: ['link', 'selection'],
 					       id: 'lookup-address',
-					       targetUrlPatterns: ['bitcoin:*']});
+					       targetUrlPatterns: ['groestlcoin:*']});
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId == lookupItemId) {
@@ -38,7 +38,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
 	} else if (info.linkUrl) {
 	    var parsed = parseBitcoinURL(info.linkUrl);
 	    if (parsed) openAddressInfo(parsed.address);
-	    else window.alert('Invalid Bitcoin address!');
+	    else window.alert('Invalid Groestlcoin address!');
 	}
     }
 });
